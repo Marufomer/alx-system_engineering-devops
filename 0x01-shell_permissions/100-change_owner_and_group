@@ -1,2 +1,2 @@
 #!/bin/bash
-chwon -hR vincent:staff_hello .
+chwon -hR vincent:staff .
