@@ -1,0 +1,2 @@
+#!/bin/bash
+ugo+r hello
