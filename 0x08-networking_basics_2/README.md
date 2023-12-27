@@ -1,0 +1,1 @@
+There's a single file on your computer that serves as a small gateway between you and the web. It's called the hosts file. If you need to block websites or create personalized web shortcuts on Linux, you can just add or tweak a few lines in the file.
