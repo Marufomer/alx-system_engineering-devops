@@ -3,6 +3,7 @@
 
 file { 'etc/ssh/ssh_cofig':
 	ensure => present,
+
 content =>"
 
 	#SSH client configuration
@@ -12,3 +13,4 @@ content =>"
 	",
 
 }
+
