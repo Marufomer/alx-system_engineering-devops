@@ -1,48 +1,37 @@
 #!/usr/bin/python3
-'''
-gather employee data from API
-'''
+"""
+A Script that, uses this REST API, for a given employee ID, returns
+information about his/her TODO list progress
+"""
 
-import re
+import json
 import requests
-import sys
+from sys import argv
 
-def get_employee_todo_progress(employee_id):
-    # Base URL for the API
-    url = "https://jsonplaceholder.typicode.com"
-    
-    # Fetch employee data
-    user_response = requests.get(f"{url}/users/{employee_id}")
-    if user_response.status_code != 200:
-        print(f"Employee with ID {employee_id} not found.")
-        return
-    
-    employee = user_response.json()
-    employee_name = employee['name']
-    
-    # Fetch TODO list data
-    todos_response = requests.get(f"{url}/todos", params={"userId": employee_id})
-    todos = todos_response.json()
-    
-    # Calculate number of done tasks and total tasks
-    total_tasks = len(todos)
-    done_tasks = [todo for todo in todos if todo['completed']]
-    number_of_done_tasks = len(done_tasks)
-    
-    # Print the results
-    print(f"Employee {employee_name} is done with tasks({number_of_done_tasks}/{total_tasks}):")
-    for task in done_tasks:
-        print(f"\t {task['title']}")
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: python3 0-gather_data_from_an_API.py <employee_id>")
-        sys.exit(1)
-    
-    try:
-        employee_id = int(sys.argv[1])
-    except ValueError:
-        print("Employee ID must be an integer.")
-        sys.exit(1)
-    
-    get_employee_todo_progress(employee_id)
+
+    sessionReq = requests.Session()
+
+    idEmp = argv[1]
+    idURL = 'https://jsonplaceholder.typicode.com/users/{}/todos'.format(idEmp)
+    nameURL = 'https://jsonplaceholder.typicode.com/users/{}'.format(idEmp)
+
+    employee = sessionReq.get(idURL)
+    employeeName = sessionReq.get(nameURL)
+
+    json_req = employee.json()
+    name = employeeName.json()['name']
+
+    totalTasks = 0
+
+    for done_tasks in json_req:
+        if done_tasks['completed']:
+            totalTasks += 1
+
+    print("Employee {} is done with tasks({}/{}):".
+          format(name, totalTasks, len(json_req)))
+
+    for done_tasks in json_req:
+        if done_tasks['completed']:
+            print("\t " + done_tasks.get('title'))
