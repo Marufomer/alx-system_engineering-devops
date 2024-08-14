@@ -48,4 +48,3 @@ def count_words(subreddit, word_list, after='', word_dict={}):
         return None
 
     count_words(subreddit, word_list, aft, word_dict)
-
