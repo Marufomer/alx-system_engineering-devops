@@ -1,1 +1,4 @@
-Lets see
+#!/usr/bin/env bash
+# Gracefully reloads gunicorn.
+
+pgrep gunicorn | xargs kill -HUP
